@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 
-// ---------- Validation helpers (custom regex, no libs) ----------
+// ---------- Validation helpers ----------
 const RE = {
   name: /^[A-Za-z][A-Za-z\s'-]{1,49}$/,
   phone: /^\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/,
@@ -10,7 +10,6 @@ const RE = {
 };
 
 function sanitize(input) {
-  // Strip tags/script-like content and neutralize angle brackets to prevent XSS on render/store
   return input
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -112,7 +111,7 @@ export default function VolunteerIntakeForm() {
     });
   };
 
-  // Simulated async fetch for roles (demonstrates loading + empty + error states)
+  // demonstrates loading + empty + error states
   const loadRoles = useCallback((simulateEmpty = false, simulateError = false) => {
     setRolesLoading(true);
     setRolesError(false);
@@ -185,7 +184,6 @@ export default function VolunteerIntakeForm() {
         announce("Submission failed due to a connection issue. Your answers were saved locally. Try again.");
         return;
       }
-      // eslint-disable-next-line no-console
       console.log("[Analytics] User interacted with Multi-Step Validation: submit_complete");
       setSubmitted(true);
       announce("Registration submitted successfully.");
